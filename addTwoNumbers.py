@@ -13,34 +13,21 @@ class Solution(object):
         """
         p1=l1
         p2=l2
-        c=0
-        num1=0
-        num2=0
-        while p1:
-            num1+=p1.val*(10**c)
-            c+=1 
-            p1=p1.next
-        c=0
-        while p2:
-            num2+=p2.val*(10**c)
-            p2=p2.next
-            c+=1
-        sum=num1+num2
-        head=ListNode(sum%10)
+        carry=0
+        head=ListNode(0)
         p=head
-        sum=sum//10
-        print(sum)
-        flag=True
-        while flag:
-            temp=sum%(10)
-            if sum==0:
-                flag=False
-            else:
-                s=ListNode(temp)
-                p.next=s
-                p=p.next
-                sum=sum//10
-            c+=1
-            
-        return head
-            
+        while p1 or p2 or carry!=0:
+            p1_value=0
+            p2_value=0
+            if p1:
+                p1_value=p1.val
+                p1=p1.next
+            if p2:
+                p2_value=p2.val
+                p2=p2.next
+            sum=p1_value+p2_value+carry
+            carry=sum//10
+            sum=sum%10
+            p.next=ListNode(sum)
+            p=p.next
+        return head.next
